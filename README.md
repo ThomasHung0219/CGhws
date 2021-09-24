@@ -31,7 +31,7 @@ Advisor: Jyun-Ming Chen
   - normal map
   - matcap
 ## Contact me
-My Enail: u10706103@ms.ttu.edu.tw
+My Email: u10706103@ms.ttu.edu.tw
 
 My gh-pages: [https://thomashung0219.github.io/CGhws/](https://thomashung0219.github.io/CGhws/)
 
