@@ -5,6 +5,10 @@ Course 2021 Fall
 
 Advisor: Jyun-Ming Chen
 
+Student: I4A03 洪璽智
+
+Student ID: 410706103
+
 ## Syllabus
 - JavaScript Intro
 - 3JSCore
