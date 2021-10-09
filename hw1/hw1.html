@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#info {
+  position: absolute;
+  top: 2%;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  color: #0000AA
+}
+
+body {
+  overflow: hidden;
+}
+</style>
+</head>
+
+<body>
+
+<div id="info">hw1:Clock 
+  <br><br>
+  
+  <button id="toggle" style="width:20%">Toggle</button>
+  <button id="type" style="width:20%"><p id="text">quartz</p></button>
+</div>
+<script src="https://threejs.org/build/three.min.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js">
+</script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script>
+
+var camera, scene, renderer;
+var Iframe,Gframe,Oframe,frame,second = new THREE.Group(),minute = new THREE.Group(),hour = new THREE.Group();
+var clock,Sangle=0,Mangle=0,Hangle=0,Scangle=0,Mcangle=0,Hcangle=0;
+var t12 = new THREE.Group(), t1 = new THREE.Group(), t2 = new THREE.Group(), t3 = new THREE.Group(), t4 = new THREE.Group(),
+	t5 = new THREE.Group(), t6 = new THREE.Group(), t7 = new THREE.Group(), t8 = new THREE.Group(), t9 = new THREE.Group(), t10 = new THREE.Group(),
+	t11 = new THREE.Group();
+var p12,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11;
+var Spoint,Shand,Scir,Mpoint,Mhand,Mcir,Hpoint,Hhand,Hcir,cenP;
+var isActive = true ,clocktype = 0;
+var i=1;
+
+$("#toggle").click(function() {
+  isActive = ! isActive;
+});
+
+$("#type").click(function() {
+  if(clocktype ==0)
+  {
+  	clocktype = 1;
+    $('#text').html('<p id="text">sector</p>');
+    
+  }
+  	
+  else if(clocktype ==1)
+  {
+  	clocktype = 2;
+    $('#text').html('<p id="text">analog</p>');
+  }
+  	
+  else if(clocktype ==2)
+  {
+  	clocktype = 0;
+    $('#text').html('<p id="text">quartz</p>');
+    second.visible = minute.visible = hour.visible = false;
+    Scir.visible = Mcir.visible = Hcir.visible = true;
+  }
+  	
+});
+
+
+init();
+animate();
+
+function init() {
+
+  renderer = new THREE.WebGLRenderer({
+    antialias: true
+  });
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor('#CCEEFF');
+  document.body.appendChild(renderer.domElement);
+
+  scene = new THREE.Scene();
+  camera = new THREE.OrthographicCamera(-50, 50, 50, -50, -10, 100);
+  camera.position.z = 10;
+	
+  frame = new THREE.Mesh (new THREE.CircleGeometry (30,60), new THREE.MeshBasicMaterial({color:'white'}));
+  frame.position.set(3,-10,0);
+  scene.add(frame);
+  
+  Iframe = new THREE.Mesh (new THREE.CircleGeometry (31,60), new THREE.MeshBasicMaterial({color:'black'}));
+  Iframe.position.set(3,-10,-1);
+  scene.add(Iframe);
+	
+  Oframe = new THREE.Mesh (new THREE.CircleGeometry (35,60), new THREE.MeshBasicMaterial({color:'#AAAAAA'}));
+  Oframe.position.set(3,-10,-2);
+  scene.add(Oframe);
+  
+  Gframe = new THREE.Mesh (new THREE.CircleGeometry (36,60), new THREE.MeshBasicMaterial({color:'black'}));
+  Gframe.position.set(3,-10,-3);
+  scene.add(Gframe);
+  
+  Shand = new THREE.Mesh (new THREE.CylinderGeometry ( 1, 1, 26, 80 ), new THREE.MeshBasicMaterial({color:'red'}));
+  
+  Spoint = new THREE.Mesh (new THREE.ConeGeometry( 4, 5, 3 ), new THREE.MeshBasicMaterial({color:'red'}));
+  
+  second.position.set(3,-10,0);
+	
+  second.add(Shand,Spoint);
+  Shand.position.set(0,12,0);
+  Spoint.position.set(0,26,0);
+  
+  scene.add(second);
+  
+  Mhand = new THREE.Mesh (new THREE.CylinderGeometry ( 1, 1, 24, 80 ), new THREE.MeshBasicMaterial({color:'black'}));
+  
+  Mpoint = new THREE.Mesh (new THREE.ConeGeometry( 4, 5, 3 ), new THREE.MeshBasicMaterial({color:'black'}));
+  
+  minute.position.set(3,-10,0);
+	
+  minute.add(Mhand,Mpoint);
+  Mhand.position.set(0,12,0);
+  Mpoint.position.set(0,24,0);
+  
+  scene.add(minute);
+  
+  Hhand = new THREE.Mesh (new THREE.CylinderGeometry ( 1, 1, 12, 80 ), new THREE.MeshBasicMaterial({color:'blue'}));
+  
+  Hpoint = new THREE.Mesh (new THREE.ConeGeometry( 4, 5, 3 ), new THREE.MeshBasicMaterial({color:'blue'}));
+  
+  hour.position.set(3,-10,0);
+	
+  hour.add(Hhand,Hpoint);
+  Hhand.position.set(0,6,0);
+  Hpoint.position.set(0,12,0);
+  
+  scene.add(hour);
+  
+  cenP = new THREE.Mesh (new THREE.CylinderGeometry ( 2, 2, 1, 80 ), new THREE.MeshBasicMaterial({color:'black'}));
+  cenP.rotation.x = Math.PI/2;
+  cenP.position.set(3,-10,1);
+  scene.add(cenP);
+  
+  t12.position.set(3,-10,1);
+  t1.position.set(3,-10,1);
+  t2.position.set(3,-10,1);
+  t3.position.set(3,-10,1);
+  t4.position.set(3,-10,1);
+  t5.position.set(3,-10,1);
+  t6.position.set(3,-10,1);
+  t7.position.set(3,-10,1);
+  t8.position.set(3,-10,1);
+  t9.position.set(3,-10,1);
+  t10.position.set(3,-10,1);
+  t11.position.set(3,-10,1);
+  
+ 
+  p12 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p12.position.set(0,30,0);
+  t12.add(p12);
+  scene.add(t12);
+  
+  p1 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p1.position.set(0,30,0);
+  t1.add(p1);
+  t1.rotation.z = -Math.PI/6;
+  scene.add(t1);
+  
+  p2 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p2.position.set(0,30,0);
+  t2.add(p2);
+  t2.rotation.z = -Math.PI/3;
+  scene.add(t2);
+  
+  
+  p3 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p3.position.set(0,30,0);
+  t3.add(p3);
+  t3.rotation.z = -Math.PI/2;
+  scene.add(t3);
+  
+  
+  p4 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p4.position.set(0,30,0);
+  t4.add(p4);
+  t4.rotation.z = -Math.PI*2/3;
+  scene.add(t4);
+  
+  p5 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p5.position.set(0,30,0);
+  t5.add(p5);
+  t5.rotation.z = -Math.PI*5/6;
+  scene.add(t5);
+  
+  p6 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p6.position.set(0,30,0);
+  t6.add(p6);
+  t6.rotation.z = -Math.PI;
+  scene.add(t6);
+  
+  p7 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p7.position.set(0,30,0);
+  t7.add(p7);
+  t7.rotation.z = Math.PI*5/6;
+  scene.add(t7);
+  
+  p8 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p8.position.set(0,30,0);
+  t8.add(p8);
+  t8.rotation.z = Math.PI*2/3;
+  scene.add(t8)
+  
+  
+  p9 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p9.position.set(0,30,0);
+  t9.add(p9);
+  t9.rotation.z = Math.PI/2;
+  scene.add(t9);
+  
+  p10 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p10.position.set(0,30,0);
+  t10.add(p10);
+  t10.rotation.z = Math.PI/3;
+  scene.add(t10);
+  
+  p11 = new THREE.Mesh (new THREE.BoxGeometry ( 2, 4, 2 ), new THREE.MeshBasicMaterial({color:'black'}));
+  p11.position.set(0,30,0);
+  t11.add(p11);
+  t11.rotation.z = Math.PI/6;
+  scene.add(t11);
+  
+  
+  Scir= new THREE.Mesh (new THREE.CircleGeometry (29,60,0,0), new THREE.MeshBasicMaterial({color:'red', side: THREE.DoubleSide}));
+  Scir.position.set(3,-10,0);
+  Scir.visible = false;
+  scene.add(Scir);
+  
+  Mcir= new THREE.Mesh (new THREE.CircleGeometry (24,60,0,0), new THREE.MeshBasicMaterial({color:'black', side: THREE.DoubleSide}));
+  Mcir.position.set(3,-10,0);
+  Mcir.visible = false;
+  scene.add(Mcir);
+  
+  Hcir= new THREE.Mesh (new THREE.CircleGeometry (15,60,0,0), new THREE.MeshBasicMaterial({color:'blue', side: THREE.DoubleSide}));
+  Hcir.position.set(3,-10,0);
+  Hcir.visible = false;
+  scene.add(Hcir);
+
+  window.addEventListener('resize', onWindowResize, false);
+  clock = new THREE.Clock();
+  clock.getDelta();
+  setTimeout(turnSecSixDegs,0);
+  setTimeout(turnMinSixDegs,60000);
+  setTimeout(turnHourSixDegs,360000);
+  //window.addEventListener('mousedown', onDocumentMouseDown, false);
+}
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function turnSecSixDegs()
+{
+	if(clocktype==0)
+  {
+  	Sangle += 1/180*Math.PI;
+	Scangle += 1/180*Math.PI;
+  	setTimeout(turnSecSixDegs,1000/6);
+  }
+  
+	else if(clocktype==1)
+  {
+  	Sangle += 6/180*Math.PI;
+	Scangle += 6/180*Math.PI;
+  	setTimeout(turnSecSixDegs,1000);
+  }
+  
+  else if(clocktype==2)
+  {
+  	Sangle += 1/180*Math.PI;
+	Scangle += 1/180*Math.PI;
+    setTimeout(turnSecSixDegs,1000/6);
+  }
+	
+  
+}
+
+function turnMinSixDegs()
+{
+	if(clocktype==0)
+  {
+  	Mangle += 1/180*Math.PI;
+	Mcangle += 1/180*Math.PI;
+  	setTimeout(turnMinSixDegs,10000);
+  }
+  
+	else if(clocktype==1)
+  {
+  	Mangle += 6/180*Math.PI;
+	Mcangle += 6/180*Math.PI;
+  	setTimeout(turnMinSixDegs,60000);
+  }
+	
+  else if(clocktype==2)
+  {
+  	Mangle += 1/180*Math.PI;
+	Mcangle += 1/180*Math.PI;
+  	setTimeout(turnMinSixDegs,10000);
+  }
+}
+
+function turnHourSixDegs()
+{
+	if(clocktype==0)
+  {
+  	Hangle += 1/180*Math.PI;
+	Hcangle += 1/180*Math.PI;
+  	setTimeout(turnHourSixDegs,60000);
+  }
+
+	else if(clocktype==1)
+  {
+  	Hangle += 6/180*Math.PI;
+	Hcangle += 1/180*Math.PI;
+  	setTimeout(turnHourSixDegs,360000);
+  }
+  
+  else if(clocktype==2)
+  {
+  	Hangle += 1/180*Math.PI;
+	Hcangle += 1/180*Math.PI;
+  	setTimeout(turnHourSixDegs,60000);
+  }
+	
+  
+}
+
+
+function animate() {
+  requestAnimationFrame(animate);
+  render();
+  if(isActive){
+	second.rotation.z = -Sangle;
+  	minute.rotation.z = -Mangle;
+	hour.rotation.z = -Hangle;
+	
+	
+    if(Scangle>Math.PI*2)
+		Scangle-=Math.PI*2;	
+	if(Mcangle>Math.PI*2)
+		Mcangle-=Math.PI*2;	
+	if(Hcangle>Math.PI*2)
+		Hcangle-=Math.PI*2;	
+		
+     
+    scene.remove(Scir);
+    Scir = new THREE.Mesh (new THREE.CircleGeometry (29,60,Math.PI/2,Scangle), new THREE.MeshBasicMaterial({color:'red', side: THREE.DoubleSide}));
+    Scir.rotation.y = Math.PI;
+    Scir.position.set(3,-10,0);
+    scene.add(Scir);
+	
+	scene.remove(Mcir);
+    Mcir = new THREE.Mesh (new THREE.CircleGeometry (24,60,Math.PI/2,Mcangle), new THREE.MeshBasicMaterial({color:'black', side: THREE.DoubleSide}));
+    Mcir.rotation.y = Math.PI;
+    Mcir.position.set(3,-10,0.5);
+    scene.add(Mcir);
+	
+	scene.remove(Hcir);
+    Hcir = new THREE.Mesh (new THREE.CircleGeometry (15,60,Math.PI/2,Hcangle), new THREE.MeshBasicMaterial({color:'blue', side: THREE.DoubleSide}));
+    Hcir.rotation.y = Math.PI;
+    Hcir.position.set(3,-10,1);
+    scene.add(Hcir);
+    
+    if(clocktype==0 || clocktype==1)
+    {
+    	second.visible = minute.visible = hour.visible = cenP.visible = true;
+    	Scir.visible = Mcir.visible = Hcir.visible = false;
+    }
+    else if(clocktype==2)
+    {
+    	second.visible = minute.visible = hour.visible = cenP.visible = false;
+    	Scir.visible = Mcir.visible = Hcir.visible = true;
+	}
+  }
+  	
+	
+}
+
+function render() {
+  renderer.render(scene, camera);
+}
+
+</script>
+</body>
+
+</html>
