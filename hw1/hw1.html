@@ -277,24 +277,30 @@ function onWindowResize() {
 
 function turnSecSixDegs()
 {
-	if(clocktype==0)
+  if(clocktype==0)
   {
-  	Sangle += 1/180*Math.PI;
-	Scangle += 1/180*Math.PI;
+	if(isActive){
+		Sangle += 1/180*Math.PI;
+		Scangle += 1/180*Math.PI;
+	}
   	setTimeout(turnSecSixDegs,1000/6);
   }
   
-	else if(clocktype==1)
+  else if(clocktype==1)
   {
-  	Sangle += 6/180*Math.PI;
-	Scangle += 6/180*Math.PI;
+	if(isActive){
+		Sangle += 6/180*Math.PI;
+		Scangle += 6/180*Math.PI;
+	}
   	setTimeout(turnSecSixDegs,1000);
   }
   
   else if(clocktype==2)
   {
-  	Sangle += 1/180*Math.PI;
-	Scangle += 1/180*Math.PI;
+	if(isActive){
+		Sangle += 1/180*Math.PI;
+		Scangle += 1/180*Math.PI;
+	}
     setTimeout(turnSecSixDegs,1000/6);
   }
 	
@@ -305,48 +311,61 @@ function turnMinSixDegs()
 {
 	if(clocktype==0)
   {
-  	Mangle += 1/180*Math.PI;
-	Mcangle += 1/180*Math.PI;
+	if(isActive){
+		Mangle += 1/180*Math.PI;
+		Mcangle += 1/180*Math.PI;
+	}
   	setTimeout(turnMinSixDegs,10000);
   }
   
 	else if(clocktype==1)
   {
-  	Mangle += 6/180*Math.PI;
-	Mcangle += 6/180*Math.PI;
+	if(isActive){
+		Mangle += 6/180*Math.PI;
+		Mcangle += 6/180*Math.PI;
+	}
   	setTimeout(turnMinSixDegs,60000);
   }
 	
   else if(clocktype==2)
   {
-  	Mangle += 1/180*Math.PI;
-	Mcangle += 1/180*Math.PI;
+	if(isActive){
+		Mangle += 1/180*Math.PI;
+		Mcangle += 1/180*Math.PI;
+	}
   	setTimeout(turnMinSixDegs,10000);
   }
 }
 
 function turnHourSixDegs()
 {
+  
 	if(clocktype==0)
-  {
-  	Hangle += 1/180*Math.PI;
-	Hcangle += 1/180*Math.PI;
-  	setTimeout(turnHourSixDegs,60000);
-  }
+	{
+		if(isActive){
+			Hangle += 1/180*Math.PI;
+			Hcangle += 1/180*Math.PI;
+		}
+		setTimeout(turnHourSixDegs,60000);
+	}
 
 	else if(clocktype==1)
-  {
-  	Hangle += 6/180*Math.PI;
-	Hcangle += 1/180*Math.PI;
-  	setTimeout(turnHourSixDegs,360000);
-  }
+	{
+		if(isActive){
+			Hangle += 6/180*Math.PI;
+			Hcangle += 1/180*Math.PI;
+		}
+		setTimeout(turnHourSixDegs,360000);
+	}
   
-  else if(clocktype==2)
-  {
-  	Hangle += 1/180*Math.PI;
-	Hcangle += 1/180*Math.PI;
-  	setTimeout(turnHourSixDegs,60000);
-  }
+	else if(clocktype==2)
+	{
+		if(isActive){
+			Hangle += 1/180*Math.PI;
+			Hcangle += 1/180*Math.PI;
+		}
+		setTimeout(turnHourSixDegs,60000);
+	}
 	
   
 }
