@@ -24,6 +24,34 @@ body {
   
   <button id="toggle" style="width:20%">Toggle</button>
   <button id="type" style="width:20%"><p id="text">quartz</p></button>
+  <button id="tozero" style="width:20%">ToZero</button><br>
+  <b id="text1">0</b>
+  <b id="point">:</b>
+  <b id="text2">0</b>
+  <b id="point2">:</b>
+  <b id="text3">0</b><br>
+  <audio id="sound" style="display:none">
+	<source src="https://thomashung0219.github.io/CGhws/hw1/Alarm.mp3" type='audio/wav'>
+  </audio>
+  
+  <b>時：
+  <button id="haddone" style="width:5%">+1</button>
+  <button id="haddten" style="width:5%">+10</button>
+  <button id="hminten" style="width:5%">-10</button>
+  <button id="hminone" style="width:5%">-1</button><br>
+  
+  <b>分：
+  <button id="maddone" style="width:5%">+1</button>
+  <button id="maddten" style="width:5%">+10</button>
+  <button id="mminten" style="width:5%">-10</button>
+  <button id="mminone" style="width:5%">-1</button><br>
+  
+  <b>秒：
+  <button id="saddone" style="width:5%">+1</button>
+  <button id="saddten" style="width:5%">+10</button>
+  <button id="sminten" style="width:5%">-10</button>
+  <button id="sminone" style="width:5%">-1</button><br>
+  
 </div>
 <script src="https://threejs.org/build/three.min.js"></script>
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js">
@@ -40,11 +68,37 @@ var t12 = new THREE.Group(), t1 = new THREE.Group(), t2 = new THREE.Group(), t3 
 	t11 = new THREE.Group();
 var p12,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11;
 var Spoint,Shand,Scir,Mpoint,Mhand,Mcir,Hpoint,Hhand,Hcir,cenP;
-var isActive = true ,clocktype = 0;
+var isActive = false ,clocktype = 0;
 var i=1;
+var h=0,m=0,s=0;
+var hflag=0,mflag=0,sflag=0,hcount=1,mcount=1,scount=1;
 
 $("#toggle").click(function() {
   isActive = ! isActive;
+});
+
+$("#tozero").click(function() {
+  $('#text1').html('<b id="text1">0</b>');
+  $('#text2').html('<b id="text2">0</b>');
+  $('#text3').html('<b id="text3">0</b>');
+  h = 0;
+  m = 0;
+  s = 0;
+  Sangle=0;
+  Mangle=0;
+  Hangle=0;
+  Scangle=0;
+  Mcangle=0;
+  Hcangle=0;
+  hour.rotation.z = -Hangle;
+  minute.rotation.z = -Mangle;
+  second.rotation.z = -Sangle;
+  hflag=0;
+  mflag=0;
+  sflag=0;
+  hcount=1;
+  mcount=1;
+  scount=1;
 });
 
 $("#type").click(function() {
@@ -69,6 +123,154 @@ $("#type").click(function() {
     Scir.visible = Mcir.visible = Hcir.visible = true;
   }
   	
+});
+
+$("#haddone").click(function() {
+	h+=1;
+	if(h>24)
+		h=0;
+	else
+	{
+	Hangle -= 6/180*Math.PI;
+	Hcangle -= 6/180*Math.PI;
+	hour.rotation.z = -Hangle;
+	}
+	$('#text1').html('<b id="text1">'+h+'</b>');
+});
+$("#haddten").click(function() {
+	h+=10;
+	if(h>24)
+		h=0;
+	else
+	{
+	Hangle -= 60/180*Math.PI;
+	Hcangle -= 60/180*Math.PI;
+	hour.rotation.z = -Hangle;
+	}
+	$('#text1').html('<b id="text1">'+h+'</b>');
+});
+$("#hminten").click(function() {
+	h-=10;
+	if(h<0)
+		h=24;
+	else
+	{
+	Hangle += 60/180*Math.PI;
+	Hcangle += 60/180*Math.PI;
+	hour.rotation.z = -Hangle;
+	}
+	$('#text1').html('<b id="text1">'+h+'</b>');
+});
+$("#hminone").click(function() {
+	h-=1;
+	if(h<0)
+		h=24;
+	else
+	{
+	Hangle += 6/180*Math.PI;
+	Hcangle += 6/180*Math.PI;
+	hour.rotation.z = -Hangle;
+	}
+	$('#text1').html('<b id="text1">'+h+'</b>');
+});
+
+$("#maddone").click(function() {
+	m+=1;
+	if(m>60)
+		m=0;
+	else
+	{
+	Mangle -= 6/180*Math.PI;
+	Mcangle -= 6/180*Math.PI;
+	minute.rotation.z = -Mangle;
+	}
+	$('#text2').html('<b id="text2">'+m+'</b>');
+});
+$("#maddten").click(function() {
+	m+=10;
+	if(m>60)
+		m=0;
+	else
+	{
+		Mangle -= 60/180*Math.PI;
+		Mcangle -= 60/180*Math.PI;
+		minute.rotation.z = -Mangle;
+	}
+	$('#text2').html('<b id="text2">'+m+'</b>');
+});
+$("#mminten").click(function() {
+	m-=10;
+	if(m<0)
+		m=60;
+	else
+	{
+	Mangle += 60/180*Math.PI;
+	Mcangle += 60/180*Math.PI;
+	minute.rotation.z = -Mangle;
+	}
+	$('#text2').html('<b id="text2">'+m+'</b>');
+});
+$("#mminone").click(function() {
+	m-=1;
+	if(m<0)
+		m=60;
+	else
+	{
+		Mangle += 6/180*Math.PI;
+		Mcangle += 6/180*Math.PI;
+		minute.rotation.z = -Mangle;
+	}
+	$('#text2').html('<b id="text2">'+m+'</b>');
+});
+
+$("#saddone").click(function() {
+	s+=1;
+	if(s>60)
+		s=0;
+	else
+	{
+		Sangle -= 6/180*Math.PI;
+		Scangle -= 6/180*Math.PI;
+		second.rotation.z = -Sangle;
+	}
+	$('#text3').html('<b id="text3">'+s+'</b>');
+});
+$("#saddten").click(function() {
+	s+=10;
+	if(s>60)
+		s=0;
+	else
+	{
+		Sangle -= 60/180*Math.PI;
+		Scangle -= 60/180*Math.PI;
+		second.rotation.z = -Sangle;
+	}
+	$('#text3').html('<b id="text3">'+s+'</b>');
+});
+$("#sminten").click(function() {
+	s-=10;
+	if(s<0)
+		s=60;
+	else
+	{
+		Sangle += 60/180*Math.PI;
+		Scangle += 60/180*Math.PI;
+		second.rotation.z = -Sangle;
+	}
+	$('#text3').html('<b id="text3">'+s+'</b>');
+	
+});
+$("#sminone").click(function() {
+	s-=1;
+	if(s<0)
+		s=60;
+	else
+	{
+		Sangle += 6/180*Math.PI;
+		Scangle += 6/180*Math.PI;
+		second.rotation.z = -Sangle;
+	}
+	$('#text3').html('<b id="text3">'+s+'</b>');
 });
 
 
@@ -264,8 +466,12 @@ function init() {
   clock = new THREE.Clock();
   clock.getDelta();
   setTimeout(turnSecSixDegs,0);
+ 
   setTimeout(turnMinSixDegs,60000);
+
+
   setTimeout(turnHourSixDegs,360000);
+
   //window.addEventListener('mousedown', onDocumentMouseDown, false);
 }
 
@@ -279,9 +485,49 @@ function turnSecSixDegs()
 {
   if(clocktype==0)
   {
-	if(isActive){
+	if(isActive ){
+		
 		Sangle += 1/180*Math.PI;
 		Scangle += 1/180*Math.PI;
+		if(scount%6==1)
+		{
+			if(s==0&&m==0&&h==0)
+			{
+				isActive = false;
+				sound.play();
+				sflag = 1;
+			}
+			if(sflag==0)
+			{
+				s-=1;
+				$('#text3').html('<b id="text3">'+s+'</b>');
+				if(s==0)
+				{
+					if(m==0&&h==0)
+					{
+						sflag = 1;
+					}
+					
+					else
+					{
+						m-=1;
+						$('#text2').html('<b id="text2">'+m+'</b>');
+						if(m==0)
+						{
+							h-=1;
+							$('#text1').html('<b id="text1">'+h+'</b>');
+							m=60;
+							$('#text2').html('<b id="text2">'+m+'</b>');
+						}
+						s=60;
+						$('#text3').html('<b id="text3">'+s+'</b>');
+					}
+				}
+			}
+		}
+		scount++;
+		if(scount>6)
+			scount = 1;
 	}
   	setTimeout(turnSecSixDegs,1000/6);
   }
@@ -291,6 +537,39 @@ function turnSecSixDegs()
 	if(isActive){
 		Sangle += 6/180*Math.PI;
 		Scangle += 6/180*Math.PI;
+		if(s==0&&m==0&&h==0)
+		{
+			isActive = false;
+			sflag = 1;
+		}
+		if(sflag==0)
+		{
+			s-=1;
+			$('#text3').html('<b id="text3">'+s+'</b>');
+			if(s==0)
+			{
+				if(m==0&&h==0)
+				{
+					sflag = 1;
+				}
+					
+				else
+				{
+					m-=1;
+					$('#text2').html('<b id="text2">'+m+'</b>');
+					if(m==0)
+						{
+							h-=1;
+							$('#text1').html('<b id="text1">'+h+'</b>');
+							m=60;
+							$('#text2').html('<b id="text2">'+m+'</b>');
+						}
+					s=60;
+					$('#text3').html('<b id="text3">'+s+'</b>');
+				}
+			}
+		}
+		
 	}
   	setTimeout(turnSecSixDegs,1000);
   }
@@ -300,6 +579,45 @@ function turnSecSixDegs()
 	if(isActive){
 		Sangle += 1/180*Math.PI;
 		Scangle += 1/180*Math.PI;
+		if(scount%6==1)
+		{
+			if(s==0&&m==0&&h==0)
+			{
+				isActive = false;
+				sflag = 1;
+			}
+			if(sflag==0)
+			{
+				s-=1;
+				$('#text3').html('<b id="text3">'+s+'</b>');
+				if(s==0)
+				{
+					if(m==0&&h==0)
+					{
+						sflag = 1;
+					}
+					
+					else
+					{
+						m-=1;
+						$('#text2').html('<b id="text2">'+m+'</b>');
+						if(m==0)
+						{
+							h-=1;
+							$('#text1').html('<b id="text1">'+h+'</b>');
+							m=60;
+							$('#text2').html('<b id="text2">'+m+'</b>');
+						}
+						
+						s=60;
+						$('#text3').html('<b id="text3">'+s+'</b>');
+					}
+				}
+			}
+		}
+		scount++;
+		if(scount>6)
+			scount = 1;
 	}
     setTimeout(turnSecSixDegs,1000/6);
   }
@@ -310,19 +628,73 @@ function turnSecSixDegs()
 function turnMinSixDegs()
 {
 	if(clocktype==0)
-  {
+	{
 	if(isActive){
 		Mangle += 1/180*Math.PI;
 		Mcangle += 1/180*Math.PI;
+		if(mcount%6==1)
+		{
+			if(m==0&&h==0)
+			{
+				mflag = 1;
+			}
+			if(mflag==0)
+			{
+				m-=1;
+				$('#text2').html('<b id="text2">'+m+'</b>');
+				if(m==0)
+				{
+					if(h==0)
+					{
+						mflag = 1;
+					}
+					
+					else
+					{
+						h-=1;
+						$('#text1').html('<b id="text1">'+h+'</b>');
+						m=60;
+						$('#text2').html('<b id="text2">'+m+'</b>');
+					}
+				}
+			}
+		}
+		mcount++;
+		if(mcount>6)
+			mcount = 1;
 	}
   	setTimeout(turnMinSixDegs,10000);
-  }
+	}
   
 	else if(clocktype==1)
   {
 	if(isActive){
 		Mangle += 6/180*Math.PI;
 		Mcangle += 6/180*Math.PI;
+		if(m==0&&h==0)
+			{
+				mflag = 1;
+			}
+			if(mflag==0)
+			{
+				m-=1;
+				$('#text2').html('<b id="text2">'+m+'</b>');
+				if(m==0)
+				{
+					if(h==0)
+					{
+						mflag = 1;
+					}
+					
+					else
+					{
+						h-=1;
+						$('#text1').html('<b id="text1">'+h+'</b>');
+						m=60;
+						$('#text2').html('<b id="text2">'+m+'</b>');
+					}
+				}
+			}
 	}
   	setTimeout(turnMinSixDegs,60000);
   }
@@ -332,6 +704,36 @@ function turnMinSixDegs()
 	if(isActive){
 		Mangle += 1/180*Math.PI;
 		Mcangle += 1/180*Math.PI;
+		if(mcount%6==1)
+		{
+			if(m==0&&h==0)
+			{
+				mflag = 1;
+			}
+			if(mflag==0)
+			{
+				m-=1;
+				$('#text2').html('<b id="text2">'+m+'</b>');
+				if(m==0)
+				{
+					if(h==0)
+					{
+						mflag = 1;
+					}
+					
+					else
+					{
+						h-=1;
+						$('#text1').html('<b id="text1">'+h+'</b>');
+						m=60;
+						$('#text2').html('<b id="text2">'+m+'</b>');
+					}
+				}
+			}
+		}
+		mcount++;
+		if(mcount>6)
+			mcount = 1;
 	}
   	setTimeout(turnMinSixDegs,10000);
   }
@@ -345,6 +747,22 @@ function turnHourSixDegs()
 		if(isActive){
 			Hangle += 1/180*Math.PI;
 			Hcangle += 1/180*Math.PI;
+			if(hcount%6==1)
+			{
+				if(h==0)
+				{
+					mflag = 1;
+				}
+				if(mflag==0)
+				{
+					h-=1;
+					$('#text1').html('<b id="text1">'+h+'</b>');
+					
+				}
+			}
+			hcount++;
+			if(hcount>6)
+				hcount = 1;
 		}
 		setTimeout(turnHourSixDegs,60000);
 	}
@@ -354,6 +772,16 @@ function turnHourSixDegs()
 		if(isActive){
 			Hangle += 6/180*Math.PI;
 			Hcangle += 1/180*Math.PI;
+			if(h==0)
+				{
+					mflag = 1;
+				}
+				if(mflag==0)
+				{
+					h-=1;
+					$('#text1').html('<b id="text1">'+h+'</b>');
+					
+				}
 		}
 		setTimeout(turnHourSixDegs,360000);
 	}
@@ -363,6 +791,22 @@ function turnHourSixDegs()
 		if(isActive){
 			Hangle += 1/180*Math.PI;
 			Hcangle += 1/180*Math.PI;
+			if(hcount%6==1)
+			{
+				if(h==0)
+				{
+					mflag = 1;
+				}
+				if(mflag==0)
+				{
+					h-=1;
+					$('#text1').html('<b id="text1">'+h+'</b>');
+					
+				}
+			}
+			hcount++;
+			if(hcount>6)
+				hcount = 1;
 		}
 		setTimeout(turnHourSixDegs,60000);
 	}
