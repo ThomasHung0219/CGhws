@@ -512,10 +512,18 @@ function turnSecSixDegs()
 						$('#text2').html('<b id="text2">'+m+'</b>');
 						if(m==0)
 						{
+							if(h==0)
+							{
+								mflag = 1;
+							}
+							
+							else
+							{
 							h-=1;
 							$('#text1').html('<b id="text1">'+h+'</b>');
 							m=60;
 							$('#text2').html('<b id="text2">'+m+'</b>');
+							}
 						}
 						s=60;
 						$('#text3').html('<b id="text3">'+s+'</b>');
@@ -558,10 +566,18 @@ function turnSecSixDegs()
 					$('#text2').html('<b id="text2">'+m+'</b>');
 					if(m==0)
 						{
+							if(h==0)
+							{
+								mflag = 1;
+							}
+							
+							else
+							{
 							h-=1;
 							$('#text1').html('<b id="text1">'+h+'</b>');
 							m=60;
 							$('#text2').html('<b id="text2">'+m+'</b>');
+							}
 						}
 					s=60;
 					$('#text3').html('<b id="text3">'+s+'</b>');
@@ -603,10 +619,18 @@ function turnSecSixDegs()
 						$('#text2').html('<b id="text2">'+m+'</b>');
 						if(m==0)
 						{
+							if(h==0)
+							{
+								mflag = 1;
+							}
+							
+							else
+							{
 							h-=1;
 							$('#text1').html('<b id="text1">'+h+'</b>');
 							m=60;
 							$('#text2').html('<b id="text2">'+m+'</b>');
+							}
 						}
 						
 						s=60;
@@ -761,7 +785,10 @@ function turnHourSixDegs()
 				}
 				if(mflag==0)
 				{
-					h-=1;
+					if(h==0)
+						h=0;
+					else
+						h-=1;
 					$('#text1').html('<b id="text1">'+h+'</b>');
 					
 				}
@@ -784,7 +811,10 @@ function turnHourSixDegs()
 				}
 				if(mflag==0)
 				{
-					h-=1;
+					if(h==0)
+						h=0;
+					else
+						h-=1;;
 					$('#text1').html('<b id="text1">'+h+'</b>');
 					
 				}
@@ -805,7 +835,10 @@ function turnHourSixDegs()
 				}
 				if(mflag==0)
 				{
-					h-=1;
+					if(h==0)
+						h=0;
+					else
+						h-=1;
 					$('#text1').html('<b id="text1">'+h+'</b>');
 					
 				}
