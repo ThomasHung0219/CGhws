@@ -99,6 +99,20 @@ $("#tozero").click(function() {
   hcount=1;
   mcount=1;
   scount=1;
+  Scir= new THREE.Mesh (new THREE.CircleGeometry (29,60,0,0), new THREE.MeshBasicMaterial({color:'red', side: THREE.DoubleSide}));
+  Scir.position.set(3,-10,0);
+  Scir.visible = false;
+  scene.add(Scir);
+  
+  Mcir= new THREE.Mesh (new THREE.CircleGeometry (24,60,0,0), new THREE.MeshBasicMaterial({color:'black', side: THREE.DoubleSide}));
+  Mcir.position.set(3,-10,0);
+  Mcir.visible = false;
+  scene.add(Mcir);
+  
+  Hcir= new THREE.Mesh (new THREE.CircleGeometry (15,60,0,0), new THREE.MeshBasicMaterial({color:'blue', side: THREE.DoubleSide}));
+  Hcir.position.set(3,-10,0);
+  Hcir.visible = false;
+  scene.add(Hcir);
 });
 
 $("#type").click(function() {
@@ -549,6 +563,7 @@ function turnSecSixDegs()
 		if(s==0&&m==0&&h==0)
 		{
 			isActive = false;
+			sound.play();
 			sflag = 1;
 		}
 		if(sflag==0)
@@ -602,6 +617,7 @@ function turnSecSixDegs()
 			if(s==0&&m==0&&h==0)
 			{
 				isActive = false;
+				sound.play();
 				sflag = 1;
 			}
 			if(sflag==0)
