@@ -74,7 +74,19 @@ var h=0,m=0,s=0;
 var hflag=0,mflag=0,sflag=0,hcount=1,mcount=1,scount=1;
 
 $("#toggle").click(function() {
-  isActive = ! isActive;
+  if(h==0&&m==0&&s==0)
+  {
+	isActive = false;
+	hflag=0;
+	mflag=0;
+	sflag=0;
+	hcount=1;
+	mcount=1;
+	scount=1;
+  }
+  else 
+	isActive = ! isActive;
+  
 });
 
 $("#tozero").click(function() {
@@ -505,14 +517,18 @@ function turnSecSixDegs()
 		Scangle += 1/180*Math.PI;
 		if(scount%6==1)
 		{
+			
 			if(s==0&&m==0&&h==0)
 			{
+			
 				isActive = false;
 				sound.play();
 				sflag = 1;
+				console.log(sflag);
 			}
 			if(sflag==0)
 			{
+				
 				if(s==0)
 				{
 					if(m==0&&h==0)
@@ -545,7 +561,6 @@ function turnSecSixDegs()
 				}
 				s-=1;
 				$('#text3').html('<b id="text3">'+s+'</b>');
-				
 			}
 		}
 		scount++;
