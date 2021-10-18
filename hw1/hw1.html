@@ -77,7 +77,12 @@ var pressClock,pressTime=0;
 
 $("#toggle").click(function() {
   if(h==0&&m==0&&s==0)
+  {
 	isActive=false;
+	sflag=1;
+  }
+  else 
+	sflag=0;
   if(sflag==1)
   {
 	//isActive = false;
