@@ -22,9 +22,10 @@ body {
 <div id="info">hw1:Clock 
   <br><br>
   
-  <button id="toggle" style="width:20%">Toggle</button>
+  <button id="toggle" onmousedown="Press()" onmouseup="Release()" style="width:20%">Start</button>
   <button id="type" style="width:20%"><p id="text">quartz</p></button>
   <button id="tozero" style="width:20%">ToZero</button><br>
+  長按 start/stop 按鈕 2秒可以重置碼表<br>
   <b id="text1">0</b>
   <b id="point">:</b>
   <b id="text2">0</b>
@@ -71,20 +72,24 @@ var Spoint,Shand,Scir,Mpoint,Mhand,Mcir,Hpoint,Hhand,Hcir,cenP;
 var isActive = false ,clocktype = 0;
 var i=1;
 var h=0,m=0,s=0;
-var hflag=0,mflag=0,sflag=0,hcount=1,mcount=1,scount=1;
+var hflag=0,mflag=0,sflag=0,hcount=1,mcount=1,scount=1,flag=0;
+var pressClock,pressTime=0;
 
 $("#toggle").click(function() {
   if(h==0&&m==0&&s==0)
+	isActive=false;
+  if(sflag==1)
   {
-	isActive = false;
+	//isActive = false;
 	hflag=0;
 	mflag=0;
 	sflag=0;
 	hcount=1;
 	mcount=1;
 	scount=1;
+	flag=0;
   }
-  else 
+  //else 
 	isActive = ! isActive;
   
 });
@@ -111,6 +116,11 @@ $("#tozero").click(function() {
   hcount=1;
   mcount=1;
   scount=1;
+  isActive = false;
+  scene.remove(Scir);
+  scene.remove(Mcir);
+  scene.remove(Hcir);
+  
   Scir= new THREE.Mesh (new THREE.CircleGeometry (29,60,0,0), new THREE.MeshBasicMaterial({color:'red', side: THREE.DoubleSide}));
   Scir.position.set(3,-10,0);
   Scir.visible = false;
@@ -157,8 +167,8 @@ $("#haddone").click(function() {
 		h=0;
 	else
 	{
-	Hangle -= 6/180*Math.PI;
-	Hcangle -= 6/180*Math.PI;
+	Hangle += 6/180*Math.PI;
+	Hcangle += 6/180*Math.PI;
 	hour.rotation.z = -Hangle;
 	}
 	$('#text1').html('<b id="text1">'+h+'</b>');
@@ -169,8 +179,8 @@ $("#haddten").click(function() {
 		h=0;
 	else
 	{
-	Hangle -= 60/180*Math.PI;
-	Hcangle -= 60/180*Math.PI;
+	Hangle += 60/180*Math.PI;
+	Hcangle += 60/180*Math.PI;
 	hour.rotation.z = -Hangle;
 	}
 	$('#text1').html('<b id="text1">'+h+'</b>');
@@ -181,8 +191,8 @@ $("#hminten").click(function() {
 		h=24;
 	else
 	{
-	Hangle += 60/180*Math.PI;
-	Hcangle += 60/180*Math.PI;
+	Hangle -= 60/180*Math.PI;
+	Hcangle -= 60/180*Math.PI;
 	hour.rotation.z = -Hangle;
 	}
 	$('#text1').html('<b id="text1">'+h+'</b>');
@@ -193,8 +203,8 @@ $("#hminone").click(function() {
 		h=24;
 	else
 	{
-	Hangle += 6/180*Math.PI;
-	Hcangle += 6/180*Math.PI;
+	Hangle -= 6/180*Math.PI;
+	Hcangle -= 6/180*Math.PI;
 	hour.rotation.z = -Hangle;
 	}
 	$('#text1').html('<b id="text1">'+h+'</b>');
@@ -206,8 +216,8 @@ $("#maddone").click(function() {
 		m=0;
 	else
 	{
-	Mangle -= 6/180*Math.PI;
-	Mcangle -= 6/180*Math.PI;
+	Mangle += 6/180*Math.PI;
+	Mcangle += 6/180*Math.PI;
 	minute.rotation.z = -Mangle;
 	}
 	$('#text2').html('<b id="text2">'+m+'</b>');
@@ -218,8 +228,8 @@ $("#maddten").click(function() {
 		m=0;
 	else
 	{
-		Mangle -= 60/180*Math.PI;
-		Mcangle -= 60/180*Math.PI;
+		Mangle += 60/180*Math.PI;
+		Mcangle += 60/180*Math.PI;
 		minute.rotation.z = -Mangle;
 	}
 	$('#text2').html('<b id="text2">'+m+'</b>');
@@ -230,8 +240,8 @@ $("#mminten").click(function() {
 		m=60;
 	else
 	{
-	Mangle += 60/180*Math.PI;
-	Mcangle += 60/180*Math.PI;
+	Mangle -= 60/180*Math.PI;
+	Mcangle -= 60/180*Math.PI;
 	minute.rotation.z = -Mangle;
 	}
 	$('#text2').html('<b id="text2">'+m+'</b>');
@@ -242,8 +252,8 @@ $("#mminone").click(function() {
 		m=60;
 	else
 	{
-		Mangle += 6/180*Math.PI;
-		Mcangle += 6/180*Math.PI;
+		Mangle -= 6/180*Math.PI;
+		Mcangle -= 6/180*Math.PI;
 		minute.rotation.z = -Mangle;
 	}
 	$('#text2').html('<b id="text2">'+m+'</b>');
@@ -255,8 +265,8 @@ $("#saddone").click(function() {
 		s=0;
 	else
 	{
-		Sangle -= 6/180*Math.PI;
-		Scangle -= 6/180*Math.PI;
+		Sangle += 6/180*Math.PI;
+		Scangle += 6/180*Math.PI;
 		second.rotation.z = -Sangle;
 	}
 	$('#text3').html('<b id="text3">'+s+'</b>');
@@ -267,8 +277,8 @@ $("#saddten").click(function() {
 		s=0;
 	else
 	{
-		Sangle -= 60/180*Math.PI;
-		Scangle -= 60/180*Math.PI;
+		Sangle += 60/180*Math.PI;
+		Scangle += 60/180*Math.PI;
 		second.rotation.z = -Sangle;
 	}
 	$('#text3').html('<b id="text3">'+s+'</b>');
@@ -279,8 +289,8 @@ $("#sminten").click(function() {
 		s=60;
 	else
 	{
-		Sangle += 60/180*Math.PI;
-		Scangle += 60/180*Math.PI;
+		Sangle -= 60/180*Math.PI;
+		Scangle -= 60/180*Math.PI;
 		second.rotation.z = -Sangle;
 	}
 	$('#text3').html('<b id="text3">'+s+'</b>');
@@ -292,8 +302,8 @@ $("#sminone").click(function() {
 		s=60;
 	else
 	{
-		Sangle += 6/180*Math.PI;
-		Scangle += 6/180*Math.PI;
+		Sangle -= 6/180*Math.PI;
+		Scangle -= 6/180*Math.PI;
 		second.rotation.z = -Sangle;
 	}
 	$('#text3').html('<b id="text3">'+s+'</b>');
@@ -320,7 +330,7 @@ function init() {
   
   
   camera = new THREE.PerspectiveCamera (100, width/height, 1, 500);
-  camera.position.set(3,-10,50);
+  camera.position.set(3,-10,55);
   camera.lookAt (new THREE.Vector3(3,-10,0));
   //camera = new THREE.OrthographicCamera(-50, 50, 50, -50, -10, 100);
   //camera.position.z = 10;
@@ -488,7 +498,7 @@ function init() {
   Hcir.visible = false;
   scene.add(Hcir);
 
-  
+  pressClock = new THREE.Clock()
   clock = new THREE.Clock();
   clock.getDelta();
   setTimeout(turnSecSixDegs,0);
@@ -513,19 +523,19 @@ function turnSecSixDegs()
   {
 	if(isActive ){
 		
-		Sangle += 1/180*Math.PI;
-		Scangle += 1/180*Math.PI;
+		Sangle -= 1/180*Math.PI;
+		Scangle -= 1/180*Math.PI;
 		if(scount%6==1)
 		{
 			
-			if(s==0&&m==0&&h==0)
+			/*if(s==0&&m==0&&h==0&&sflag==1)
 			{
 			
 				isActive = false;
 				sound.play();
-				sflag = 1;
+				sflag = 0;
 				console.log(sflag);
-			}
+			}*/
 			if(sflag==0)
 			{
 				
@@ -534,6 +544,18 @@ function turnSecSixDegs()
 					if(m==0&&h==0)
 					{
 						sflag = 1;
+						if(flag==0)
+							sound.play();
+						isActive = false;
+						h = 0;
+					    m = 0;
+					    s = 0;
+					    Sangle=0;
+					    Mangle=0;
+					    Hangle=0;
+					    Scangle=0;
+					    Mcangle=0;
+					    Hcangle=0;
 					}
 					
 					else
@@ -545,6 +567,7 @@ function turnSecSixDegs()
 							if(h==0)
 							{
 								mflag = 1;
+								
 							}
 							
 							else
@@ -559,7 +582,8 @@ function turnSecSixDegs()
 						$('#text3').html('<b id="text3">'+s+'</b>');
 					}
 				}
-				s-=1;
+				else
+					s-=1;
 				$('#text3').html('<b id="text3">'+s+'</b>');
 			}
 		}
@@ -573,75 +597,28 @@ function turnSecSixDegs()
   else if(clocktype==1)
   {
 	if(isActive){
-		Sangle += 6/180*Math.PI;
-		Scangle += 6/180*Math.PI;
-		if(s==0&&m==0&&h==0)
-		{
-			isActive = false;
-			sound.play();
-			sflag = 1;
-		}
+		Sangle -= 6/180*Math.PI;
+		Scangle -= 6/180*Math.PI;
 		if(sflag==0)
-		{
-			if(s==0)
 			{
-				if(m==0&&h==0)
-				{
-					sflag = 1;
-				}
-					
-				else
-				{
-					m-=1;
-					$('#text2').html('<b id="text2">'+m+'</b>');
-					if(m==0)
-						{
-							if(h==0)
-							{
-								mflag = 1;
-							}
-							
-							else
-							{
-							h-=1;
-							$('#text1').html('<b id="text1">'+h+'</b>');
-							m=60;
-							$('#text2').html('<b id="text2">'+m+'</b>');
-							}
-						}
-					s=60;
-					$('#text3').html('<b id="text3">'+s+'</b>');
-				}
-			}
-			s-=1;
-			$('#text3').html('<b id="text3">'+s+'</b>');
-			
-		}
-		
-	}
-  	setTimeout(turnSecSixDegs,1000);
-  }
-  
-  else if(clocktype==2)
-  {
-	if(isActive){
-		Sangle += 1/180*Math.PI;
-		Scangle += 1/180*Math.PI;
-		if(scount%6==1)
-		{
-			if(s==0&&m==0&&h==0)
-			{
-				isActive = false;
-				sound.play();
-				sflag = 1;
-			}
-			if(sflag==0)
-			{
+				
 				if(s==0)
 				{
 					if(m==0&&h==0)
 					{
 						sflag = 1;
+						if(flag==0)
+							sound.play();
+						isActive = false;
+						h = 0;
+					    m = 0;
+					    s = 0;
+					    Sangle=0;
+					    Mangle=0;
+					    Hangle=0;
+					    Scangle=0;
+					    Mcangle=0;
+					    Hcangle=0;
 					}
 					
 					else
@@ -653,6 +630,7 @@ function turnSecSixDegs()
 							if(h==0)
 							{
 								mflag = 1;
+								
 							}
 							
 							else
@@ -663,14 +641,75 @@ function turnSecSixDegs()
 							$('#text2').html('<b id="text2">'+m+'</b>');
 							}
 						}
-						
 						s=60;
 						$('#text3').html('<b id="text3">'+s+'</b>');
 					}
 				}
-				s-=1;
+				else
+					s-=1;
 				$('#text3').html('<b id="text3">'+s+'</b>');
+			}
+		
+	}
+  	setTimeout(turnSecSixDegs,1000);
+  }
+  
+  else if(clocktype==2)
+  {
+	if(isActive){
+		Sangle -= 1/180*Math.PI;
+		Scangle -= 1/180*Math.PI;
+		if(scount%6==1)
+		{
+			if(sflag==0)
+			{
 				
+				if(s==0)
+				{
+					if(m==0&&h==0)
+					{
+						sflag = 1;
+						if(flag==0)
+							sound.play();
+						isActive = false;
+						h = 0;
+					    m = 0;
+					    s = 0;
+					    Sangle=0;
+					    Mangle=0;
+					    Hangle=0;
+					    Scangle=0;
+					    Mcangle=0;
+					    Hcangle=0;
+					}
+					
+					else
+					{
+						m-=1;
+						$('#text2').html('<b id="text2">'+m+'</b>');
+						if(m==0)
+						{
+							if(h==0)
+							{
+								mflag = 1;
+								
+							}
+							
+							else
+							{
+							h-=1;
+							$('#text1').html('<b id="text1">'+h+'</b>');
+							m=60;
+							$('#text2').html('<b id="text2">'+m+'</b>');
+							}
+						}
+						s=60;
+						$('#text3').html('<b id="text3">'+s+'</b>');
+					}
+				}
+				else
+					s-=1;
+				$('#text3').html('<b id="text3">'+s+'</b>');
 			}
 		}
 		scount++;
@@ -688,8 +727,8 @@ function turnMinSixDegs()
 	if(clocktype==0)
 	{
 	if(isActive){
-		Mangle += 1/180*Math.PI;
-		Mcangle += 1/180*Math.PI;
+		Mangle -= 1/180*Math.PI;
+		Mcangle -= 1/180*Math.PI;
 		if(mcount%6==1)
 		{
 			if(m==0&&h==0)
@@ -728,8 +767,8 @@ function turnMinSixDegs()
 	else if(clocktype==1)
   {
 	if(isActive){
-		Mangle += 6/180*Math.PI;
-		Mcangle += 6/180*Math.PI;
+		Mangle -= 6/180*Math.PI;
+		Mcangle -= 6/180*Math.PI;
 		if(m==0&&h==0)
 			{
 				mflag = 1;
@@ -762,8 +801,8 @@ function turnMinSixDegs()
   else if(clocktype==2)
   {
 	if(isActive){
-		Mangle += 1/180*Math.PI;
-		Mcangle += 1/180*Math.PI;
+		Mangle -= 1/180*Math.PI;
+		Mcangle -= 1/180*Math.PI;
 		if(mcount%6==1)
 		{
 			if(m==0&&h==0)
@@ -806,8 +845,8 @@ function turnHourSixDegs()
 	if(clocktype==0)
 	{
 		if(isActive){
-			Hangle += 1/180*Math.PI;
-			Hcangle += 1/180*Math.PI;
+			Hangle -= 1/180*Math.PI;
+			Hcangle -= 1/180*Math.PI;
 			if(hcount%6==1)
 			{
 				if(h==0)
@@ -834,8 +873,8 @@ function turnHourSixDegs()
 	else if(clocktype==1)
 	{
 		if(isActive){
-			Hangle += 6/180*Math.PI;
-			Hcangle += 1/180*Math.PI;
+			Hangle -= 6/180*Math.PI;
+			Hcangle -= 1/180*Math.PI;
 			if(h==0)
 				{
 					mflag = 1;
@@ -856,8 +895,8 @@ function turnHourSixDegs()
 	else if(clocktype==2)
 	{
 		if(isActive){
-			Hangle += 1/180*Math.PI;
-			Hcangle += 1/180*Math.PI;
+			Hangle -= 1/180*Math.PI;
+			Hcangle -= 1/180*Math.PI;
 			if(hcount%6==1)
 			{
 				if(h==0)
@@ -930,9 +969,66 @@ function animate() {
     	second.visible = minute.visible = hour.visible = cenP.visible = false;
     	Scir.visible = Mcir.visible = Hcir.visible = true;
 	}
+	$('#toggle').html('Stop');
+	
+  }
+  
+  else{
+    $('#toggle').html('Start');
   }
   	
 	
+}
+
+function Press(){
+  pressClock.getDelta();
+}
+
+function Release(){
+  pressTime = pressClock.getDelta();
+  if(pressTime >= 2){
+    $('#text1').html('<b id="text1">0</b>');
+	$('#text2').html('<b id="text2">0</b>');
+	$('#text3').html('<b id="text3">0</b>');
+	h = 0;
+	m = 0;
+	s = 0;
+	Sangle=0;
+	Mangle=0;
+	Hangle=0;
+	Scangle=0;
+	Mcangle=0;
+	Hcangle=0;
+	hour.rotation.z = -Hangle;
+	minute.rotation.z = -Mangle;
+	second.rotation.z = -Sangle;
+	hflag=0;
+	mflag=0;
+	sflag=0;
+	hcount=1;
+	mcount=1;
+	scount=1;
+	flag=1;
+	
+	scene.remove(Scir);
+	scene.remove(Mcir);
+	scene.remove(Hcir);
+	isActive = false;
+	Scir= new THREE.Mesh (new THREE.CircleGeometry (29,60,0,0), new THREE.MeshBasicMaterial({color:'red', side: THREE.DoubleSide}));
+	Scir.position.set(3,-10,0);
+	Scir.visible = false;
+	scene.add(Scir);
+  
+	Mcir= new THREE.Mesh (new THREE.CircleGeometry (24,60,0,0), new THREE.MeshBasicMaterial({color:'black', side: THREE.DoubleSide}));
+	Mcir.position.set(3,-10,0);
+	Mcir.visible = false;
+	scene.add(Mcir);
+  
+	Hcir= new THREE.Mesh (new THREE.CircleGeometry (15,60,0,0), new THREE.MeshBasicMaterial({color:'blue', side: THREE.DoubleSide}));
+	Hcir.position.set(3,-10,0);
+	Hcir.visible = false;
+	scene.add(Hcir);
+  }
 }
 
 function onWindowResize() {
