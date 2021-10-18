@@ -79,13 +79,13 @@ $("#toggle").click(function() {
   if(h==0&&m==0&&s==0)
   {
 	isActive=false;
+	
 	flag=1;
   }
-  else 
-	flag=0;
+  
   if(sflag==1)
   {
-	//isActive = false;
+	isActive = false;
 	hflag=0;
 	mflag=0;
 	sflag=0;
@@ -94,9 +94,11 @@ $("#toggle").click(function() {
 	scount=1;
 	flag=0;
   }
-  //else 
+  else
+{  
 	isActive = ! isActive;
-  
+  console.log(isActive);
+  }
 });
 
 $("#tozero").click(function() {
@@ -526,7 +528,7 @@ function turnSecSixDegs()
 {
   if(clocktype==0)
   {
-	if(isActive ){
+	if(isActive){
 		
 		Sangle -= 1/180*Math.PI;
 		Scangle -= 1/180*Math.PI;
