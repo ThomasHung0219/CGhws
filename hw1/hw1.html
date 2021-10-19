@@ -530,9 +530,9 @@ function turnSecSixDegs()
   {
 	if(isActive){
 		
-		Sangle -= 1/180*Math.PI;
-		Scangle -= 1/180*Math.PI;
-		if(scount%6==1)
+		Sangle -= 6/10/180*Math.PI;
+		Scangle -= 6/10/180*Math.PI;
+		if(scount%10==1)
 		{
 			
 			/*if(s==0&&m==0&&h==0&&sflag==1)
@@ -595,10 +595,10 @@ function turnSecSixDegs()
 			}
 		}
 		scount++;
-		if(scount>6)
+		if(scount>10)
 			scount = 1;
 	}
-  	setTimeout(turnSecSixDegs,1000/6);
+  	setTimeout(turnSecSixDegs,1000/10);
   }
   
   else if(clocktype==1)
@@ -664,9 +664,9 @@ function turnSecSixDegs()
   else if(clocktype==2)
   {
 	if(isActive){
-		Sangle -= 1/180*Math.PI;
-		Scangle -= 1/180*Math.PI;
-		if(scount%6==1)
+		Sangle -= 6/10/180*Math.PI;
+		Scangle -= 6/10/180*Math.PI;
+		if(scount%10==1)
 		{
 			if(sflag==0)
 			{
@@ -720,10 +720,10 @@ function turnSecSixDegs()
 			}
 		}
 		scount++;
-		if(scount>6)
+		if(scount>10)
 			scount = 1;
 	}
-    setTimeout(turnSecSixDegs,1000/6);
+    setTimeout(turnSecSixDegs,1000/10);
   }
 	
   
@@ -734,9 +734,9 @@ function turnMinSixDegs()
 	if(clocktype==0)
 	{
 	if(isActive){
-		Mangle -= 1/180*Math.PI;
-		Mcangle -= 1/180*Math.PI;
-		if(mcount%6==1)
+		Mangle -= 6/10/180*Math.PI;
+		Mcangle -= 6/10/180*Math.PI;
+		if(mcount%10==1)
 		{
 			if(m==0&&h==0)
 			{
@@ -765,10 +765,10 @@ function turnMinSixDegs()
 			}
 		}
 		mcount++;
-		if(mcount>6)
+		if(mcount>10)
 			mcount = 1;
 	}
-  	setTimeout(turnMinSixDegs,10000);
+  	setTimeout(turnMinSixDegs,60000/10);
 	}
   
 	else if(clocktype==1)
@@ -808,9 +808,9 @@ function turnMinSixDegs()
   else if(clocktype==2)
   {
 	if(isActive){
-		Mangle -= 1/180*Math.PI;
-		Mcangle -= 1/180*Math.PI;
-		if(mcount%6==1)
+		Mangle -= 6/10/180*Math.PI;
+		Mcangle -= 6/10/180*Math.PI;
+		if(mcount%10==1)
 		{
 			if(m==0&&h==0)
 			{
@@ -839,10 +839,10 @@ function turnMinSixDegs()
 			}
 		}
 		mcount++;
-		if(mcount>6)
+		if(mcount>10)
 			mcount = 1;
 	}
-  	setTimeout(turnMinSixDegs,10000);
+  	setTimeout(turnMinSixDegs,60000/10);
   }
 }
 
@@ -852,9 +852,9 @@ function turnHourSixDegs()
 	if(clocktype==0)
 	{
 		if(isActive){
-			Hangle -= 1/180*Math.PI;
-			Hcangle -= 1/180*Math.PI;
-			if(hcount%6==1)
+			Hangle -= 6/10/180*Math.PI;
+			Hcangle -= 6/10/180*Math.PI;
+			if(hcount%10==1)
 			{
 				if(h==0)
 				{
@@ -871,10 +871,10 @@ function turnHourSixDegs()
 				}
 			}
 			hcount++;
-			if(hcount>6)
+			if(hcount>10)
 				hcount = 1;
 		}
-		setTimeout(turnHourSixDegs,60000);
+		setTimeout(turnHourSixDegs,360000/10);
 	}
 
 	else if(clocktype==1)
@@ -902,9 +902,9 @@ function turnHourSixDegs()
 	else if(clocktype==2)
 	{
 		if(isActive){
-			Hangle -= 1/180*Math.PI;
-			Hcangle -= 1/180*Math.PI;
-			if(hcount%6==1)
+			Hangle -= 6/10/180*Math.PI;
+			Hcangle -= 6/10/180*Math.PI;
+			if(hcount%10==1)
 			{
 				if(h==0)
 				{
@@ -921,10 +921,10 @@ function turnHourSixDegs()
 				}
 			}
 			hcount++;
-			if(hcount>6)
+			if(hcount>10)
 				hcount = 1;
 		}
-		setTimeout(turnHourSixDegs,60000);
+		setTimeout(turnHourSixDegs,360000/10);
 	}
 	
   
