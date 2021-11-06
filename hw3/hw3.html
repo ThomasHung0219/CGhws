@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#info {
+  position: absolute;
+  top: 2%;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  color: #0000AA
+}
+
+body {
+  overflow: hidden;
+}
+</style>
+</head>
+
+<body>
+<div id="info">hw3:Module 
+  <br><br>
+  
+  <button id="toggle"  style="width:20%">Switch</button>
+</div>
+<script src="https://threejs.org/build/three.min.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://daybrush.com/scenejs/release/latest/dist/scene.min.js"></script>
+
+<script>
+
+var camera, cameraB,cameraT,cameraF,cameraH;
+var scene, renderer;
+var module1 = new THREE.Group();
+var module2 = new THREE.Group();
+var flag = true;
+var controls;
+var gridXZ;
+
+init();
+animate();
+
+$("#toggle").click(function() {
+  flag = !flag;
+});
+
+function createModule(){
+    let module = new THREE.Group();
+	var length = 7,
+    width = 10;
+  var rr = 3;
+
+  var shape = new THREE.Shape(); 
+  var shape2 = new THREE.Shape();
+  var shape3 = new THREE.Shape();
+  var shape4 = new THREE.Shape(); 
+  var shape5 = new THREE.Shape();
+  var shape6 = new THREE.Shape();
+  var shape7 = new THREE.Shape();
+  var shape8 = new THREE.Shape();
+  var shape9 = new THREE.Shape();
+  var shape10 = new THREE.Shape();
+  var shape11 = new THREE.Shape();
+  var shape12 = new THREE.Shape();
+  var shape13 = new THREE.Shape();
+  var shape14 = new THREE.Shape();
+  var shape15 = new THREE.Shape();
+  var shape16 = new THREE.Shape();
+  var shape17 = new THREE.Shape();
+  var shape18 = new THREE.Shape();
+  var path = new THREE.Path();
+
+	// CW (CCW is also ok)
+  shape.moveTo(0, 0);
+  shape.lineTo(length-rr, 0);
+  shape.absarc(length-rr,rr,rr,Math.PI*1.5, Math.PI*2);
+  shape.lineTo(length, width-rr);
+  shape.absarc(length-rr,width-rr,rr,0, Math.PI*0.5);
+  shape.lineTo(0, width);
+  shape.lineTo(0, 0);
+  path.moveTo(5,5);
+  path.absarc(4,5,2,0, Math.PI*2);
+  shape.holes.push(path);
+  
+  
+  shape2.moveTo(0,0);
+  shape2.lineTo(0, 2);
+  shape2.bezierCurveTo(0,2, -2, 2, -4, 6);
+  shape2.lineTo(-4, 6);
+  shape2.lineTo(-4, 0);
+  
+  shape3.moveTo(0,0);
+  shape3.lineTo(0, 2);
+  shape3.bezierCurveTo(0,2, -2, 2, -4, 6);
+  shape3.lineTo(-4, 6);
+  shape3.lineTo(-4, 0);
+  
+  shape4.moveTo(0,0);
+  shape4.lineTo(0, 2);
+  shape4.bezierCurveTo(0,2, -2, 2, -4, 6);
+  shape4.lineTo(-4, 6);
+  shape4.lineTo(-4, 0);
+  
+  shape5.moveTo(0,0);
+  shape5.lineTo(0, 2);
+  shape5.bezierCurveTo(0,2, -2, 2, -4, 6);
+  shape5.lineTo(-4, 6);
+  shape5.lineTo(-4, 0);
+  
+  shape6.moveTo(0,0);
+  shape6.lineTo(0, 2);
+  shape6.bezierCurveTo(0,2, -2, 2, -4, 6);
+  shape6.lineTo(-4, 6);
+  shape6.lineTo(-4, 0);
+  
+  shape7.moveTo(-4, 0);
+  shape7.lineTo(-15, 0);
+  shape7.lineTo(-15, width);
+  shape7.lineTo(-15, width);
+  shape7.lineTo(-4, width);
+  
+  shape8.moveTo(-4, 0);
+  shape8.lineTo(-15, 0);
+  shape8.lineTo(-15, width);
+  shape8.lineTo(-15, width);
+  shape8.lineTo(-4, width);
+  
+  shape9.moveTo(-4, 4);
+  shape9.lineTo(-7, 4);
+  shape9.lineTo(-7, 8);
+  shape9.lineTo(-7, 8);
+  shape9.lineTo(-4, 8);
+  
+  shape10.moveTo(-4, 4);
+  shape10.lineTo(-7, 4);
+  shape10.lineTo(-7, 8);
+  shape10.lineTo(-7, 8);
+  shape10.lineTo(-4, 8);
+  
+  shape11.moveTo(-4, 4);
+  shape11.lineTo(-7, 4);
+  shape11.lineTo(-7, 8);
+  shape11.lineTo(-7, 8);
+  shape11.lineTo(-4, 8);
+  
+  shape12.moveTo(-4, 4);
+  shape12.lineTo(-7, 4);
+  shape12.lineTo(-7, 8);
+  shape12.lineTo(-7, 8);
+  shape12.lineTo(-4, 8);
+  
+  shape13.moveTo(-4, 4);
+  shape13.lineTo(-7, 4);
+  shape13.lineTo(-7, 8);
+  shape13.lineTo(-7, 8);
+  shape13.lineTo(-4, 8);
+  
+  shape14.moveTo(-4, 4);
+  shape14.lineTo(-7, 4);
+  shape14.lineTo(-7, 8);
+  shape14.lineTo(-7, 8);
+  shape14.lineTo(-4, 8);
+  
+  shape15.moveTo(-4, 4);
+  shape15.lineTo(-7, 4);
+  shape15.lineTo(-7, 8);
+  shape15.lineTo(-7, 8);
+  shape15.lineTo(-4, 8);
+  
+  shape16.moveTo(-4, 4);
+  shape16.lineTo(-7, 4);
+  shape16.lineTo(-7, 8);
+  shape16.lineTo(-7, 8);
+  shape16.lineTo(-4, 8);
+  
+  shape17.moveTo(-4, 4);
+  shape17.lineTo(-7, 4);
+  shape17.lineTo(-7, 8);
+  shape17.lineTo(-7, 8);
+  shape17.lineTo(-4, 8);
+  
+  shape18.moveTo(-4, 4);
+  shape18.lineTo(-7, 4);
+  shape18.lineTo(-7, 8);
+  shape18.lineTo(-7, 8);
+  shape18.lineTo(-4, 8);
+
+  var extrudeSettings = {
+    steps: 1,
+    depth: 2,
+    bevelEnabled: false,
+  };
+
+	
+  var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+  var material = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+   
+    
+});
+  var mesh = new THREE.Mesh(geometry, material);
+  module.add(mesh);
+  
+  var geometry2 = new THREE.ExtrudeGeometry(shape2, extrudeSettings);
+  var material2 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+   
+});
+  var mesh2 = new THREE.Mesh(geometry2, material2);
+  module.add(mesh2);
+  
+  var geometry3 = new THREE.ExtrudeGeometry(shape3, extrudeSettings);
+  var material3 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh3 = new THREE.Mesh(geometry3, material3);
+  module.add(mesh3);
+  
+  var geometry4 = new THREE.ExtrudeGeometry(shape4, extrudeSettings);
+  var material4 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh4 = new THREE.Mesh(geometry4, material4);
+  module.add(mesh4);
+  
+  var geometry5 = new THREE.ExtrudeGeometry(shape5, extrudeSettings);
+  var material5 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh5 = new THREE.Mesh(geometry5, material5);
+  module.add(mesh5);
+  
+  var geometry6 = new THREE.ExtrudeGeometry(shape6, extrudeSettings);
+  var material6 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh6 = new THREE.Mesh(geometry6, material6);
+  module.add(mesh6);
+  
+  var geometry7 = new THREE.ExtrudeGeometry(shape7, extrudeSettings);
+  var material7 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+   
+});
+  var mesh7 = new THREE.Mesh(geometry7, material7);
+  module.add(mesh7);
+  
+  var geometry8 = new THREE.ExtrudeGeometry(shape8, extrudeSettings);
+  var material8 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh8 = new THREE.Mesh(geometry8, material8);
+  module.add(mesh8);
+  
+  var geometry9 = new THREE.ExtrudeGeometry(shape9, extrudeSettings);
+  var material9 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh9 = new THREE.Mesh(geometry9, material9);
+  module.add(mesh9);
+  
+  var geometry10 = new THREE.ExtrudeGeometry(shape10, extrudeSettings);
+  var material10 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh10 = new THREE.Mesh(geometry10, material10);
+  module.add(mesh10);
+  
+  var geometry11 = new THREE.ExtrudeGeometry(shape11, extrudeSettings);
+  var material11 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh11 = new THREE.Mesh(geometry11, material11);
+  module.add(mesh11);
+  
+  var geometry12 = new THREE.ExtrudeGeometry(shape12, extrudeSettings);
+  var material12 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh12 = new THREE.Mesh(geometry12, material12);
+  module.add(mesh12);
+  
+  var geometry13 = new THREE.ExtrudeGeometry(shape13, extrudeSettings);
+  var material13 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh13 = new THREE.Mesh(geometry13, material13);
+  module.add(mesh13);
+  
+  var geometry14 = new THREE.ExtrudeGeometry(shape14, extrudeSettings);
+  var material14 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh14 = new THREE.Mesh(geometry14, material14);
+  module.add(mesh14);
+  
+  var geometry15 = new THREE.ExtrudeGeometry(shape15, extrudeSettings);
+  var material15 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh15 = new THREE.Mesh(geometry15, material15);
+  module.add(mesh15);
+  
+  var geometry16 = new THREE.ExtrudeGeometry(shape16, extrudeSettings);
+  var material16 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh16 = new THREE.Mesh(geometry16, material16);
+  module.add(mesh16);
+  
+  var geometry17 = new THREE.ExtrudeGeometry(shape17, extrudeSettings);
+  var material17 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh17 = new THREE.Mesh(geometry17, material17);
+  module.add(mesh17);
+  
+  var geometry18 = new THREE.ExtrudeGeometry(shape18, extrudeSettings);
+  var material18 = new THREE.MeshPhongMaterial({ 
+    color: 0xBCC6CC, 
+    shininess: 30,
+    
+});
+  var mesh18 = new THREE.Mesh(geometry18, material18);
+  module.add(mesh18);
+  
+  
+  mesh.rotation.x = -Math.PI/2;
+  mesh2.position.z=-2;
+  mesh3.position.z=-4;
+  mesh4.position.z=-6;
+  mesh5.position.z=-8;
+  mesh6.position.z=-10;
+  mesh7.rotation.x = -Math.PI/2;
+  mesh8.rotation.x = -Math.PI/2;
+  mesh8.position.y = 2;
+  mesh9.position.z=-2;
+  mesh10.position.z=-3;
+  mesh11.position.z=-9;
+  mesh12.position.z=-10;
+  mesh13.rotation.x = -Math.PI/2;
+  mesh13.position.set(0,4,1);
+  
+  mesh14.position.set(-8,0,-2);
+  mesh15.position.set(-8,0,-3);
+  mesh16.position.set(-8,0,-9);
+  mesh17.position.set(-8,0,-10);
+  mesh18.rotation.x = -Math.PI/2;
+  mesh18.position.set(-8,4,1);
+  
+  module.position.set(5,0,5);
+  
+  return module;
+}
+
+function init() {
+
+  scene = new THREE.Scene();
+  
+
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+  
+  // front
+  cameraF = new THREE.OrthographicCamera (-15,15,15,-15, -400,400);
+  cameraF.position.set (0,0,50);
+  
+  // top
+  cameraT = new THREE.OrthographicCamera (-15,15,15,-15,-400,400);
+  cameraT.position.set (0,20,0);
+  cameraT.up.set (0,0,-1); // -Z
+  cameraT.lookAt (0,0,0);
+  
+  //back
+  cameraB = new THREE.OrthographicCamera (-15,15,15,-15, -400,400);
+  cameraB.position.set (-20,0,0);
+  cameraB.lookAt (0,0,0);
+  
+  cameraH = new THREE.OrthographicCamera (-15,15,15,-15, -400,400);
+  cameraH.position.set (20,0,0);
+  cameraH.lookAt (0,0,0);
+  
+  camera.position.set (0,25,100);
+
+  let light = new THREE.PointLight(0xffffff);
+  light.position.set(100, 300, 200);
+  scene.add(light);
+
+  gridXZ = new THREE.GridHelper(100, 10, 'red', 'white');
+  scene.add(gridXZ);
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x888888);
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  document.body.appendChild(renderer.domElement);
+  ////////////////////////////////////////////////////////////////////////
+
+  module1 = createModule();  
+  scene.add(module1);
+  
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  render();
+}
+
+function render() {
+  
+	
+	if(flag)
+	{
+		gridXZ.visible = true;
+		renderer.autoClear = true;
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.render(scene, camera);
+		controls.enabled = true;
+	}
+	
+	else
+	{
+		gridXZ.visible = false;
+		controls.enabled = false;
+		renderer.autoClear = false;
+		var ww = window.innerWidth;
+		var hh = window.innerHeight;
+		  
+		renderer.clear();
+		renderer.setViewport (0,0, ww/2, hh/2);
+		renderer.render(scene, cameraF);
+		  
+		renderer.setViewport (0,hh/2, ww/2, hh/2);
+		renderer.render(scene, cameraT);
+		
+		renderer.setViewport (ww/2,0, ww/2, hh/2);
+		renderer.render(scene, cameraB);
+		
+		renderer.setViewport (ww/2,hh/2.5, ww/2, hh/2);
+		renderer.render(scene, cameraH);
+  
+	}
+}
+
+
+</script>
+</body>
+
+</html>
