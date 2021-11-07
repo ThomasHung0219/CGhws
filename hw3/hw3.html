@@ -34,9 +34,17 @@ var camera, cameraB,cameraT,cameraF,cameraH;
 var scene, renderer;
 var module1 = new THREE.Group();
 var module2 = new THREE.Group();
-var flag = true;
+var flag = false;
 var controls;
 var gridXZ;
+var ww = 0;
+var hh = 0;
+
+(function() {
+  Math.clamp = function(val,min,max){
+    return Math.min(Math.max(val,min),max);
+    
+  }})();
 
 init();
 animate();
@@ -44,6 +52,8 @@ animate();
 $("#toggle").click(function() {
   flag = !flag;
 });
+
+
 
 function createModule(){
     let module = new THREE.Group();
@@ -440,24 +450,31 @@ function animate() {
 }
 
 function render() {
-  
+    if(flag == true && (ww < window.innerWidth && hh < window.innerHeight)){
+		ww += window.innerWidth/10;
+		hh += window.innerHeight/10;
+	}else if(flag == false && (ww > 0 && hh > 0)){
+		ww -= window.innerWidth/10;
+		hh -= window.innerHeight/10;
+	}
+	ww = Math.clamp (ww, 0, window.innerWidth);
+	hh = Math.clamp (hh, 0, window.innerHeight);
 	
-	if(flag)
+	if(ww <= window.innerWidth/2 )
 	{
 		gridXZ.visible = true;
 		renderer.autoClear = true;
-		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.setViewport (0,0, window.innerWidth, window.innerHeight);
 		renderer.render(scene, camera);
 		controls.enabled = true;
 	}
 	
-	else
+	else if(ww > 0)
 	{
 		gridXZ.visible = false;
 		controls.enabled = false;
 		renderer.autoClear = false;
-		var ww = window.innerWidth;
-		var hh = window.innerHeight;
+		
 		  
 		renderer.clear();
 		renderer.setViewport (0,0, ww/2, hh/2);
@@ -473,6 +490,11 @@ function render() {
 		renderer.render(scene, cameraH);
   
 	}
+	
+	
+  
+
+
 }
 
 
