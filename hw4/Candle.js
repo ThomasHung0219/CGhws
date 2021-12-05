@@ -1,5 +1,5 @@
 import * as THREE from "https://threejs.org/build/three.module.js";
-import {scene} from './main.js';
+import {scene,pickables} from './main.js';
 
 class Candle{
 	constructor(x,z,c,b,f){
