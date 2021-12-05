@@ -5,6 +5,8 @@ import { Candle } from "./Candle.js";
 
 var camera, scene, renderer;
 var flameMesh0,flameMesh1,flameMesh2,flameMesh3,flameMesh4;
+var flameInterval0,flameInterval1,flameInterval2,flameInterval3,flameInterval4;
+var Interval0,Interval1,Interval2,Interval3,Interval4;
 var pickables = [];
 var candles = [];
 var mouse = new THREE.Vector2();
@@ -49,13 +51,19 @@ function init() {
   document.addEventListener('pointerdown', onDocumentMouseDown, false);
   document.addEventListener('pointermove', onDocumentMouseMove, false);
 
-	flameMesh0 = candles[0].flameMesh;
+  flameMesh0 = candles[0].flameMesh;
   flameMesh1 = candles[1].flameMesh;
   flameMesh2 = candles[2].flameMesh;
   flameMesh3 = candles[3].flameMesh;
   flameMesh4 = candles[4].flameMesh;
   
- 	flameInterval0 = setInterval(textureAnimate0, 100);
+  pickables.push(candles[0].candle);
+  pickables.push(candles[1].candle);
+  pickables.push(candles[2].candle);
+  pickables.push(candles[3].candle);
+  pickables.push(candles[4].candle);
+  
+  flameInterval0 = setInterval(textureAnimate0, 100);
   flameInterval1 = setInterval(textureAnimate1, 100);
   flameInterval2 = setInterval(textureAnimate2, 100);
   flameInterval3 = setInterval(textureAnimate3, 100);
