@@ -47,6 +47,7 @@ class Candles{
   		this.flameMesh = flameMesh;
 		this.interval = setInterval (this.textureAnimate.bind(this), 100);	
 		this.count = undefined;
+		this.flame = true;
   }
   
   textureAnimate() {
@@ -62,7 +63,7 @@ class Candles{
 		}
 
 		this.count++;
-    
+		
 		}
 	}
 	
@@ -71,13 +72,17 @@ class Candles{
 		this.interval = setInterval(this.textureAnimate.bind(this), 100);
 	    this.flameMesh.material.visible = true;
 	    this.light.visible = true;
+		this.count = true;
 	}
 	
 	flameOff(){
-		clearInterval(this.interval);
-		this.off = setInterval(this.flameOn.bind(this), 3000);
-	    this.flameMesh.material.visible = false;
-	    this.light.visible = false;
+		if(this.count){
+			clearInterval(this.interval);
+			this.off = setInterval(this.flameOn.bind(this), 3000);
+			this.flameMesh.material.visible = false;
+			this.light.visible = false;
+		}
+		this.count = false;
 	}
 }
 
