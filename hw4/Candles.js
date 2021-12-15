@@ -35,7 +35,7 @@ class Candles{
       candle.add(flameMesh);
       flameMesh.name = f;
       scene.add(candle);
-      flameMesh.position.y = 38;
+      flameMesh.position.y = 28;
       
 
       light.position.copy(flameMesh.position);
