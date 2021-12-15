@@ -19,7 +19,7 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(50, 1, 1, 10000);
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.set(0,80,250);
 
   let controls = new OrbitControls(camera, renderer.domElement);
@@ -35,11 +35,11 @@ function init() {
   //scene.add (new THREE.GridHelper(200,20,'red','white'));
   ////////////////////////////////////////////////////////////
   
-  candles.push(new Candles(0,0,"c0","b0","f0"));
-  candles.push(new Candles(50,50,"c1","b1","f1"));
-  candles.push(new Candles(-30,-60,"c2","b2","f2"));
-  candles.push(new Candles(-50,80,"c3","b3","f3"));
-  candles.push(new Candles(70,-50,"c4","b4","f4"));
+  candles.push(new Candles(0,0,"c0","b0","f0","t0"));
+  candles.push(new Candles(50,50,"c1","b1","f1","t1"));
+  candles.push(new Candles(-30,-60,"c2","b2","f2","t2"));
+  candles.push(new Candles(-50,80,"c3","b3","f3","t3"));
+  candles.push(new Candles(70,-50,"c4","b4","f4","t4"));
   
 	
   window.addEventListener('resize', onWindowResize, false);

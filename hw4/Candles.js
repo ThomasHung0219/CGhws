@@ -2,7 +2,7 @@ import * as THREE from "https://threejs.org/build/three.module.js";
 import {scene} from './main_new.js';
 
 class Candles{
-	constructor(x,z,c,b,f){
+	constructor(x,z,c,b,f,t){
   		var candle = new THREE.Object3D();
   		let body = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 20, 6), new THREE.MeshPhongMaterial({
     color: 'white',
@@ -25,12 +25,17 @@ class Candles{
         alphaTest: 0.5
       });
       let flameMesh = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), texMat);
-  
-  
+	  let torch = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 3, 6), new THREE.MeshPhongMaterial({
+    color: 'black',
+    side: THREE.DoubleSide
+  }));
+	  torch.name = t;
+	  torch.position.y = 20;
+	  candle.add(torch);
       candle.add(flameMesh);
       flameMesh.name = f;
       scene.add(candle);
-      flameMesh.position.y = 28;
+      flameMesh.position.y = 38;
       
 
       light.position.copy(flameMesh.position);
